@@ -27,10 +27,11 @@ public class WebSocketChat {
     @OnMessage
     public void process(Session session, String message){
         System.out.println(message);
-        if (message.indexOf("login:") == 0) {
+        if (message.indexOf("进入了聊天室") != 0) {
             this.session = session;
-            String[] arrayString = message.split(":");
-            nickName = arrayString[1] + UUID.randomUUID();
+            int beginIndex = message.indexOf("【");
+            int endIndex = message.indexOf("】");
+            nickName = message.substring(beginIndex + 1,endIndex) + UUID.randomUUID();
             connections.put(nickName, this);
         }
         sendAll(message);
