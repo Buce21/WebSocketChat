@@ -18,7 +18,7 @@ public class WebSocketChat {
     private String nickName;
     private static final Map<String,Object> connections = new HashMap<>();
     static Integer connectNum = 0;
-    private Counter counter = new Counter();
+    private Counter counter ;
 
 
     @OnOpen
@@ -80,4 +80,11 @@ public class WebSocketChat {
         }
     }
 
+    public Counter getCounter() {
+        return counter;
+    }
+
+    public void setCounter(Counter counter) {
+        this.counter = counter;
+    }
 }
