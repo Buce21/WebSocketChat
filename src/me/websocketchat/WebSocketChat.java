@@ -17,11 +17,15 @@ public class WebSocketChat {
     private Session session;
     private String nickName;
     private static final Map<String,Object> connections = new HashMap<>();
-    static int connectNum = 0;
+    static Integer connectNum = 0;
+    private Counter counter = new Counter();
+
+
     @OnOpen
     public void start(Session session){
         System.out.println("session "+session.getId()+" open.");
         ++connectNum;
+        counter.process(session,connectNum.toString());
     }
 
     @OnMessage
