@@ -14,6 +14,11 @@
         .textSpan{
 
         }
+       .alert{
+           padding: 5px;
+           margin-bottom: 10px;
+       }
+
     </style>
 
 </head>
@@ -25,9 +30,6 @@
                 <h1>Web Socket 聊天室</h1>
             </div>
             <div class="col-md-8">
-                <div class="col-md-12 row">
-                    按下连接按钮，会通过WebSocket发起一个到聊天浏览器的连接。
-                </div>
                 <div class="col-md-12 row">
                     <div class="form-group col-md-12">
                         <div class="input-group col-md-8">
@@ -79,6 +81,7 @@
     var ws;
     var SocketCreated = false;
     var isUserloggedout = false;
+    var lastMessageType;
 
     function lockOn(str)
     {
@@ -135,7 +138,7 @@
     };
 
     function WSonMessage(event) {
-        if (event.data.indexOf("进入了聊天室") != 0) Log(event.data,"WARNING");
+        if (event.data.indexOf("进入了聊天室") != -1) Log(event.data,"WARNING");
         else Log(event.data);
     };
 
@@ -156,20 +159,23 @@
     /*发送消息*/
     function SendDataClicked() {
         if (document.getElementById("DataToSend").value.trim() != "") {
-            ws.send(document.getElementById("txtName").value + "说 :\"" + document.getElementById("DataToSend").value + "\"");
+            ws.send("<div class='alert alert-info col-md-2'  style='     padding: 5px;    text-align: center;  margin-bottom:10px;' role='alert'><strong>"+document.getElementById("txtName").value  +"</strong></div>"+"<div class='alert alert-info col-md-10'  style='    padding: 5px;  margin-bottom:10px;' role='alert'>"+ document.getElementById("DataToSend").value + "</div>");
             document.getElementById("DataToSend").value = "";
         }
     };
 
     /*输出到文本框*/
     function Log(Text, MessageType) {
-
-        if (MessageType == "OK") Text = "<div class='alert alert-success' role='alert'>" + Text +"</div>";
-        if (MessageType == "ERROR") Text = "<div class='alert alert-danger' role='alert'>" + Text +"</div>";
-        if (MessageType == "WARNING") Text = "<div class='alert alert-warning' role='alert'>" + Text +"</div>";
-        document.getElementById("LogContainer").innerHTML = document.getElementById("LogContainer").innerHTML + Text + "<br />";
+        if (MessageType == "OK") {Text = "<div class='alert alert-success' style='  margin-bottom:10px;' role='alert'>" + Text +"</div>";}
+        else if (MessageType == "ERROR"){ Text = "<div class='alert alert-danger'  style='  margin-bottom:10px;' role='alert'>" + Text +"</div>";}
+        else if (MessageType == "WARNING"){ Text = "<div class='alert alert-warning '  style='  margin-bottom:10px;' role='alert'>" + Text +"</div>";}
+        else{
+            Text = "<span class='bubble'>"+Text+"</span></br>"
+        }
+        document.getElementById("LogContainer").innerHTML = document.getElementById("LogContainer").innerHTML + Text;
         var LogContainer = document.getElementById("LogContainer");
         LogContainer.scrollTop = LogContainer.scrollHeight;
+        lastMessageType = MessageType;
     };
 
     $(document).ready(function () {

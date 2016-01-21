@@ -27,7 +27,7 @@ public class WebSocketChat {
     @OnMessage
     public void process(Session session, String message){
         System.out.println(message);
-        if (message.indexOf("进入了聊天室") != 0) {
+        if (message.indexOf("进入了聊天室") != -1) {
             this.session = session;
             int beginIndex = message.indexOf("【");
             int endIndex = message.indexOf("】");
