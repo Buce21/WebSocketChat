@@ -3,6 +3,8 @@ package me.websocketchat;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -11,8 +13,13 @@ import java.util.UUID;
 @ServerEndpoint(value="/counter")
 public class Counter {
 
+    private static final Map<String,Object> connections = new HashMap<>();
+
+    private Session session;
+
     @OnOpen
     public void start(Session session){
+        this.session = session;
         System.out.println("count-session "+session.getId()+" open.");
     }
 
@@ -20,7 +27,8 @@ public class Counter {
     public void process(Session session, String message){
         System.out.println("count-session " + session.getId() + " msg.");
         System.out.println(message);
-        WebSocketChat.sendAll(message);
+        connections.put(message,this);
+        sendAll(message);
     }
 
     @OnClose
@@ -33,6 +41,31 @@ public class Counter {
         System.err.println("count-session " + session.getId() + " error:" + throwable);
     }
 
+    public static void sendAll(String msg){
+        for (String key : connections.keySet()) {
+            Counter client = null ;
+            try {
+                client = (Counter) connections.get(key);
+                synchronized (client) {
+                    client.session.getBasicRemote().sendText(msg);
+                }
+            } catch (IOException e) {
+                connections.remove(client);
+                try {
+                    client.session.close();
+                } catch (IOException e1) {
+                    //ignore
+                }
+            }
+        }
+    }
 
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
 
 }
