@@ -17,10 +17,11 @@ public class WebSocketChat {
     private Session session;
     private String nickName;
     private static final Map<String,Object> connections = new HashMap<>();
-
+    static int connectNum = 0;
     @OnOpen
     public void start(Session session){
         System.out.println("session "+session.getId()+" open.");
+        ++connectNum;
     }
 
     @OnMessage
@@ -38,6 +39,7 @@ public class WebSocketChat {
     @OnClose
     public void end(Session session){
         System.out.println("session " + session.getId() + " close.");
+        --connectNum;
         connections.remove(nickName);
     }
 
