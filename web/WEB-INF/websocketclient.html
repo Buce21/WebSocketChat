@@ -103,7 +103,7 @@
             ws.close();
         } else {
             lockOn("进入聊天室...");
-            Log("准备连接到聊天服务器 ...");
+            Log("准备连接到聊天服务器 ...","WARNING");
             try {
                 if ("WebSocket" in window) {
                     ws = new WebSocket("ws://" + document.getElementById("Connection").value);
@@ -135,13 +135,14 @@
     };
 
     function WSonMessage(event) {
+        if (event.data.indexOf())
         Log(event.data);
     };
 
     function WSonClose() {
         lockOff();
         if (isUserloggedout)
-            Log("【"+document.getElementById("txtName").value+"】离开了聊天室！");
+            Log("【"+document.getElementById("txtName").value+"】离开了聊天室！","WARNING");
         document.getElementById("ToggleConnection").innerHTML = "连 接";
         document.getElementById("ToggleConnection").className = "btn btn-success";
         $("#SendDataContainer").hide();
@@ -162,8 +163,10 @@
 
     /*输出到文本框*/
     function Log(Text, MessageType) {
-        if (MessageType == "OK") Text = "<span style='color: green;'>" + Text + "</span>";
-        if (MessageType == "ERROR") Text = "<span style='color: red;'>" + Text + "</span>";
+
+        if (MessageType == "OK") Text = "<div class='alert alert-success' role='alert'>" + Text +"</div>";
+        if (MessageType == "ERROR") Text = "<div class='alert alert-danger' role='alert'>" + Text +"</div>";
+        if (MessageType == "WARNING") Text = "<div class='alert alert-warning' role='alert'>" + Text +"</div>";
         document.getElementById("LogContainer").innerHTML = document.getElementById("LogContainer").innerHTML + Text + "<br />";
         var LogContainer = document.getElementById("LogContainer");
         LogContainer.scrollTop = LogContainer.scrollHeight;
