@@ -17,15 +17,20 @@ public class WebSocketChat {
     private Session session;
     private String nickName;
     private static final Map<String,Object> connections = new HashMap<>();
+    private static final Map<String,String> names = new HashMap<>();
     static Integer connectNum = 0;
-    private Counter counter ;
+    private Counter counter = new Counter();
 
 
     @OnOpen
     public void start(Session session){
         System.out.println("session "+session.getId()+" open.");
         ++connectNum;
-        counter.process(session,connectNum.toString());
+        String str ="";
+        for (String key : names.keySet()){
+            str+=names.get(key)+"|";
+        }
+        counter.send(str);
     }
 
     @OnMessage
@@ -36,6 +41,7 @@ public class WebSocketChat {
             int beginIndex = message.indexOf("【");
             int endIndex = message.indexOf("】");
             nickName = message.substring(beginIndex + 1,endIndex) + UUID.randomUUID();
+            names.put(nickName , message.substring(beginIndex + 1,endIndex));
             connections.put(nickName, this);
         }
         sendAll(message);
@@ -45,6 +51,7 @@ public class WebSocketChat {
     public void end(Session session){
         System.out.println("session " + session.getId() + " close.");
         --connectNum;
+        names.remove(nickName);
         connections.remove(nickName);
     }
 
@@ -80,11 +87,4 @@ public class WebSocketChat {
         }
     }
 
-    public Counter getCounter() {
-        return counter;
-    }
-
-    public void setCounter(Counter counter) {
-        this.counter = counter;
-    }
 }

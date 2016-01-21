@@ -114,9 +114,9 @@
     };
 
     function updateList(str){
-        var array = str.split("|");
+        var strs = str.data;
+        var array = strs.split("|");
         var number = array.length
-        changeOnlineNum(number);
         var html="<li class='list-group-item'><span class='badge' id='onlineNum'>"+number+"</span>在线人数</li>"
         for(var i=0;i<number;i++){
            if(i<11){
@@ -235,10 +235,10 @@
             Log("您的浏览器支持WebSocket. 您可以尝试连接到聊天服务器!", "OK");
             document.getElementById("Connection").value = "localhost:8088/WebSocketChat/chat";
             countS = new WebSocket("ws://localhost:8088/WebSocketChat/counter");
-            countS.onopen = countMessage;
-            countS.onmessage = countMessage;
-            countS.onclose = countMessage;
-            countS.onerror = countMessage;
+            countS.onopen = updateList;
+            countS.onmessage = updateList;
+            countS.onclose = updateList;
+            countS.onerror = updateList;
         } else {
             Log("您的浏览器不支持WebSocket。请选择其他的浏览器再尝试连接服务器。", "ERROR");
             document.getElementById("ToggleConnection").disabled = true;
