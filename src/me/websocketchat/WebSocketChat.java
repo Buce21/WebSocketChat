@@ -1,7 +1,7 @@
 package me.websocketchat;
 
 /**
- * Created by Administrator on 2016/1/20.
+ * Created by Buce on 2016/1/20.
  */
 
 import javax.websocket.*;

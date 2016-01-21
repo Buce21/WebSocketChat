@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="WebSocketChat:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/WebSocketChat_war</output-path>
+    <root id="archive" name="WebSocketChat_war.war">
+      <element id="artifact" artifact-name="WebSocketChat:war exploded" />
+    </root>
+  </artifact>
+</component>
