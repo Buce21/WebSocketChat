@@ -69,7 +69,10 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div id="skm_LockPane" class="LockOff"></div>
+               <small> <div id="skm_LockPane" class="LockOff"></div><small>
+                <ul class="list-group" id="onlineList">
+                    <li class="list-group-item"><span class="badge" id="onlineNum">0</span>在线人数</li>
+                </ul>
             </div>
         </form>
     </div>
@@ -82,6 +85,7 @@
     var SocketCreated = false;
     var isUserloggedout = false;
     var lastMessageType;
+    var countS;
 
     function lockOn(str)
     {
@@ -95,6 +99,19 @@
     {
         var lock = document.getElementById('skm_LockPane');
         lock.className = 'LockOff';
+    }
+
+    function changeOnlineNum(num){
+        $("#onlineNum").html(num);
+    }
+
+    function countMessage(event) {
+        console.log(event)
+        changeOnlineNum(event.data);
+    };
+
+    function addList(){
+
     }
 
     /*链接WebSocket*/
@@ -128,6 +145,9 @@
             ws.onclose = WSonClose;
             ws.onerror = WSonError;
         }
+
+
+
     };
 
     function WSonOpen() {
@@ -200,6 +220,11 @@
         if (WebSocketsExist) {
             Log("您的浏览器支持WebSocket. 您可以尝试连接到聊天服务器!", "OK");
             document.getElementById("Connection").value = "localhost:8088/WebSocketChat/chat";
+            countS = new WebSocket("ws://localhost:8088/WebSocketChat/counter");
+            countS.onopen = countMessage;
+            countS.onmessage = countMessage;
+            countS.onclose = countMessage;
+            countS.onerror = countMessage;
         } else {
             Log("您的浏览器不支持WebSocket。请选择其他的浏览器再尝试连接服务器。", "ERROR");
             document.getElementById("ToggleConnection").disabled = true;
