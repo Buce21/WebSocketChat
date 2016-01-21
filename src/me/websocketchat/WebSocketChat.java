@@ -46,7 +46,15 @@ public class WebSocketChat {
 
     @OnError
     public void error(Session session, java.lang.Throwable throwable){
+
+        try {
+            session.getBasicRemote().sendText("<div class='alert alert-danger'  style='  margin-bottom:10px;' role='alert'>" + "未知错误，请重新连接！" +"</div>");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         System.err.println("session " + session.getId() + " error:" + throwable);
+
     }
 
     public static void sendAll(String msg){

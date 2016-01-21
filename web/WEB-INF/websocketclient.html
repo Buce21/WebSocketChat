@@ -26,7 +26,7 @@
 
     <div class="container">
         <form id="form1" runat="server" class="form-inline">
-            <div class="col-md-12">
+            <div class="col-md-12 " style="margin-bottom: 30px;margin-top: 20px">
                 <h1>Web Socket 聊天室</h1>
             </div>
             <div class="col-md-8">
@@ -151,8 +151,9 @@
         $("#SendDataContainer").hide();
     };
 
-    function WSonError() {
+    function WSonError(event) {
         lockOff();
+        alert(event.data);
         Log("远程连接中断。", "ERROR");
     };
 
