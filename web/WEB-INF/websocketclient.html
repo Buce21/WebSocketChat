@@ -68,11 +68,14 @@
                         </div><!-- /input-group -->
                 </div>
             </div>
-            <div class="col-md-4">
-               <small> <div id="skm_LockPane" class="LockOff"></div><small>
+            <div class="col-md-2">
+               <small> <div id="skm_LockPane" class="LockOff"></div></small>
                 <ul class="list-group" id="onlineList">
                     <li class="list-group-item"><span class="badge" id="onlineNum">0</span>在线人数</li>
                 </ul>
+            </div>
+            <div class="col-md-2">
+
             </div>
         </form>
     </div>
@@ -110,8 +113,19 @@
         changeOnlineNum(event.data);
     };
 
-    function addList(){
-
+    function updateList(str){
+        var array = str.split("|");
+        var number = array.length
+        changeOnlineNum(number);
+        var html="<li class='list-group-item'><span class='badge' id='onlineNum'>"+number+"</span>在线人数</li>"
+        for(var i=0;i<number;i++){
+           if(i<11){
+               html += " <li class='list-group-item'><a href='#'>"+array[i]+"</a></li>"
+           }else if(i == 11){
+                html+=" <li class='list-group-item'><a href='#'>"+"..."+"</a></li>"
+           }
+        }
+        $("#onlineList").html(html);
     }
 
     /*链接WebSocket*/
