@@ -43,13 +43,16 @@
                             <input type="text" id="txtName" class="form-control" value="Test"/>
                         </div>
                         <div class="col-md-4 pull-right">
-                            <button id='ToggleConnection' class="btn btn-primary" type="button" onclick='ToggleConnectionClicked();'>连 接</button>
+                            <button id='ToggleConnection' class="btn btn-success" type="button" onclick='ToggleConnectionClicked();'>连 接</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12 row">
-                    <div class="panel panel-default" style="height: 300px;overflow: auto">
-                        <div class="panel-body"  id='LogContainer' style="height:0px;padding-bottom:100%;word-break: break-all;">
+                    <div class="panel panel-info" style="height: auto;overflow: hidden;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">聊天室</h4>
+                        </div>
+                        <div class="panel-body"  id='LogContainer' style="height: 300px;overflow: auto;word-break: break-all;">
 
                         </div>
                     </div>
@@ -116,6 +119,7 @@
                 return;
             }
             document.getElementById("ToggleConnection").innerHTML = "断 开";
+            document.getElementById("ToggleConnection").className = "btn btn-danger";
             ws.onopen = WSonOpen;
             ws.onmessage = WSonMessage;
             ws.onclose = WSonClose;
@@ -138,7 +142,8 @@
         lockOff();
         if (isUserloggedout)
             Log("【"+document.getElementById("txtName").value+"】离开了聊天室！");
-        document.getElementById("ToggleConnection").innerHTML = "连接";
+        document.getElementById("ToggleConnection").innerHTML = "连 接";
+        document.getElementById("ToggleConnection").className = "btn btn-success";
         $("#SendDataContainer").hide();
     };
 
