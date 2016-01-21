@@ -11,6 +11,6 @@
     <title>Web Chat</title>
   </head>
   <body>
-  <a href="websocketclient.html">进入聊天室</a><br>
+  <a href="intoChat">进入聊天室</a><br>
   </body>
 </html>
