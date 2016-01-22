@@ -26,23 +26,21 @@ public class WebSocketChat {
     public void start(Session session){
         System.out.println("session "+session.getId()+" open.");
         ++connectNum;
-        String str ="";
-        for (String key : names.keySet()){
-            str+=names.get(key)+"|";
-        }
-        counter.send(str);
+        sendCount();
     }
 
     @OnMessage
     public void process(Session session, String message){
-        System.out.println(message);
+        System.out.println("process---"+message);
         if (message.indexOf("进入了聊天室") != -1) {
             this.session = session;
             int beginIndex = message.indexOf("【");
             int endIndex = message.indexOf("】");
             nickName = message.substring(beginIndex + 1,endIndex) + UUID.randomUUID();
+            System.out.println( message.substring(beginIndex + 1,endIndex));
             names.put(nickName , message.substring(beginIndex + 1,endIndex));
             connections.put(nickName, this);
+            sendCount();
         }
         sendAll(message);
     }
@@ -53,6 +51,7 @@ public class WebSocketChat {
         --connectNum;
         names.remove(nickName);
         connections.remove(nickName);
+        sendCount();
     }
 
     @OnError
@@ -85,6 +84,14 @@ public class WebSocketChat {
                 }
             }
         }
-    }
 
+    }
+    public void sendCount(){
+        String str ="";
+        for (String key : names.keySet()){
+            str+=names.get(key)+"|";
+        }
+        System.out.println(str);
+        counter.send(str);
+    }
 }

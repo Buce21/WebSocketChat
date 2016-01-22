@@ -114,7 +114,8 @@
     };
 
     function updateList(str){
-        var strs = str.data;
+        console.log(str.data)
+        var strs = str.data.substr(0,str.data.length-1);
         var array = strs.split("|");
         var number = array.length
         var html="<li class='list-group-item'><span class='badge' id='onlineNum'>"+number+"</span>在线人数</li>"

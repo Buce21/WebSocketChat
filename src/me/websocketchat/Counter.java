@@ -14,14 +14,15 @@ import java.util.UUID;
 public class Counter {
 
     private static final Map<String,Object> connections = new HashMap<>();
-
+    private String sessionName;
     private Session session;
 
     @OnOpen
     public void start(Session session){
         this.session = session;
         System.out.println("count-session "+session.getId()+" open.");
-        connections.put(UUID.randomUUID().toString(),this);
+        sessionName = UUID.randomUUID().toString();
+        connections.put(sessionName,this);
     }
 
     @OnMessage
@@ -35,6 +36,7 @@ public class Counter {
     @OnClose
     public void end(Session session){
         System.out.println("count-session " + session.getId() + " close.");
+        connections.remove(sessionName);
     }
 
     @OnError
