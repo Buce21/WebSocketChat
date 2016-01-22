@@ -8,6 +8,7 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ public class WebSocketChat {
     private Session session;
     private String nickName;
     private static final Map<String,Object> connections = new HashMap<>();
-    private static final Map<String,String> names = new HashMap<>();
+    private static final Map<String,String> names = new LinkedHashMap<>();
     static Integer connectNum = 0;
     private Counter counter = new Counter();
 

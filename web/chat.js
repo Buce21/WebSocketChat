@@ -126,7 +126,7 @@ function Log(Text, MessageType) {
     else if (MessageType == "ERROR"){ Text = "<div class='alert alert-danger'  style='  margin-bottom:10px;' role='alert'>" + Text +"</div>";}
     else if (MessageType == "WARNING"){ Text = "<div class='alert alert-warning '  style='  margin-bottom:10px;' role='alert'>" + Text +"</div>";}
     else{
-        Text = "<span class='bubble'>"+Text+"</span></br>"
+        Text = "<span class='bubble col-md-12'>"+Text+"</span></br>"
     }
     document.getElementById("LogContainer").innerHTML = document.getElementById("LogContainer").innerHTML + Text;
     var LogContainer = document.getElementById("LogContainer");
