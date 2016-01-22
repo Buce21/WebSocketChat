@@ -219,11 +219,13 @@
         /*验证浏览器是否支持WebSocket*/
         var WebSocketsExist = true;
         try {
-            var dummy = new WebSocket("ws://45.78.46.180:80/test");
+            var dummy = new WebSocket("ws://localhost:8088/test");
+            dummy.close();
         } catch (ex) {
             try
             {
-                webSocket = new MozWebSocket("ws://45.78.46.180:80/test");
+                var webSocket = new MozWebSocket("ws://localhost:8088/test")
+                webSocket.close();
             }
             catch(ex)
             {
