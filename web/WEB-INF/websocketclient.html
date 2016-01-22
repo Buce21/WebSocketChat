@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <title>Web sockets test</title>
+    <title>Web Chat</title>
 
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
@@ -10,9 +10,6 @@
         .row{
             margin-top: 5px;
             margin-bottom: 5px;
-        }
-        .textSpan{
-
         }
        .alert{
            padding: 5px;
@@ -27,7 +24,7 @@
     <div class="container">
         <form id="form1" runat="server" class="form-inline">
             <div class="col-md-12 " style="margin-bottom: 30px;margin-top: 20px">
-                <h1>Web Socket 聊天室</h1>
+                <h1>Web Chat Online</h1>
             </div>
             <div class="col-md-8">
                 <div class="col-md-12 row">
@@ -109,17 +106,18 @@
     }
 
     function countMessage(event) {
-        console.log(event)
         changeOnlineNum(event.data);
     };
 
     function updateList(str){
-        console.log(str.data)
         var number;
-        var strs = str.data.substr(0,str.data.length-1);
-        var array = strs.split("|");
-        if(str.data == "error") number = 0;
-        else  number = array.length
+        if(str.data == "error" || str.data == undefined){
+            number = 0;
+        }else{
+            var strs = str.data.substr(0,str.data.length-1);
+            var array = strs.split("|");
+            number = array.length
+        }
         var html="<li class='list-group-item'><span class='badge' id='onlineNum'>"+number+"</span>在线人数</li>"
         for(var i=0;i<number;i++){
            if(i<11){
@@ -222,12 +220,12 @@
         /*验证浏览器是否支持WebSocket*/
         var WebSocketsExist = true;
         try {
-            var dummy = new WebSocket("ws://localhost:8088/test");
+            var dummy = new WebSocket("ws://localhost:8088/WebSocketChat/test");
             dummy.close();
         } catch (ex) {
             try
             {
-                var webSocket = new MozWebSocket("ws://localhost:8088/test")
+                var webSocket = new MozWebSocket("ws://localhost:8088/WebSocketChat/test")
                 webSocket.close();
             }
             catch(ex)
