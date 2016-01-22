@@ -94,4 +94,8 @@ public class WebSocketChat {
         System.out.println(str);
         counter.send(str);
     }
+
+    public static Map<String, String> getNames() {
+        return names;
+    }
 }

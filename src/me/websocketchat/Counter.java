@@ -23,6 +23,12 @@ public class Counter {
         System.out.println("count-session "+session.getId()+" open.");
         sessionName = UUID.randomUUID().toString();
         connections.put(sessionName,this);
+        String str ="";
+        for (String key : WebSocketChat.getNames().keySet()){
+            str += WebSocketChat.getNames().get(key)+"|";
+        }
+        System.out.println(str);
+        send(str);
     }
 
     @OnMessage
@@ -54,6 +60,9 @@ public class Counter {
             try {
                 client = (Counter) connections.get(key);
                 synchronized (client) {
+                    if ("".equals(msg)){
+                        msg = "error";
+                    }
                     client.session.getBasicRemote().sendText(msg);
                 }
             } catch (IOException e) {
