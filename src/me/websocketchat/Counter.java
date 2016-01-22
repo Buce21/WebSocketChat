@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
+ * 统计在线人数
  * Created by Buce on 2016/1/21.
  */
 @ServerEndpoint(value="/counter")

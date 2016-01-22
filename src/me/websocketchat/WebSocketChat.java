@@ -67,6 +67,10 @@ public class WebSocketChat {
 
     }
 
+    /**
+     * 发消息给所有人
+     * @param msg 消息
+     */
     public static void sendAll(String msg){
         for (String key : connections.keySet()) {
             WebSocketChat client = null ;
