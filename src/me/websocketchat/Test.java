@@ -1,6 +1,5 @@
 package me.websocketchat;
 
-import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
 /**
