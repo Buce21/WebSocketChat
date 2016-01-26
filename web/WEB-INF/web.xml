@@ -3,4 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
+    <servlet>
+        <servlet-name>log4j-init</servlet-name>
+        <servlet-class>me.websocketchat.Log4jInit</servlet-class>
+
+        <init-param>
+            <param-name>log4j-init-file</param-name>
+            <param-value>WEB-INF\log4j.lcf</param-value>
+        </init-param>
+
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 </web-app>
