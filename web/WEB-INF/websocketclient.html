@@ -15,7 +15,21 @@
            padding: 5px;
            margin-bottom: 10px;
        }
+        .emt_list li{
+            height: 20px;
+            width: 20px;
+            cursor: pointer;
+            padding: 4px;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            list-style: none;
+        }
 
+        .emt_con {
+            border: 1px solid #ddd;
+            height: 200px;
+            overflow-x: hidden;
+            overflow-y: auto;}
     </style>
 
 </head>
@@ -57,6 +71,9 @@
                     </div>
                 </div>
                 <div id='SendDataContainer' class="col-md-12 row">
+                       <div class=" col-md-1">
+                           <a tabindex="0" id="emoji" class="btn btn-primary" role="button" data-placement="top" data-toggle="popover" data-template="<img src='http://res.cc.netease.com/webcc/static/images/emotions/sys/1.gif'/>" title="表情" onclick="emojiShow()">^_^</a>
+                       </div>
                         <div class="input-group col-md-10">
                             <input type="text" id="DataToSend" class="form-control" placeholder="请输入...">
                            <span class="input-group-btn">
