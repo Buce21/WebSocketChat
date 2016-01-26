@@ -4,6 +4,8 @@ package me.websocketchat;
  * Created by Buce on 2016/1/20.
  */
 
+import sun.rmi.runtime.Log;
+
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
@@ -11,6 +13,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ServerEndpoint(value="/chat")
 public class WebSocketChat {
@@ -21,6 +25,7 @@ public class WebSocketChat {
     private static final Map<String,String> names = new LinkedHashMap<>();
     static Integer connectNum = 0;
     private Counter counter = new Counter();
+    private Logger logger = Logger.getLogger("log.text");
 
 
     @OnOpen
@@ -48,6 +53,7 @@ public class WebSocketChat {
 
     @OnClose
     public void end(Session session){
+        logger.log(Level.INFO,"session " + session.getId() + " close.");
         System.out.println("session " + session.getId() + " close.");
         --connectNum;
         names.remove(nickName);
