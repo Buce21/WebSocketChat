@@ -14,12 +14,12 @@ import java.io.IOException;
  */
 @WebServlet(name = "RedirectChat" ,urlPatterns = "/intoChat")
 public class RedirectServlet extends HttpServlet{
-
+    private Logger logger = Logger.getLogger(RedirectServlet.class);
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Logger logger = Logger.getLogger(RedirectServlet.class);
-        logger.debug("IP: " + request.getRemoteAddr());
+
         request.getRequestDispatcher("WEB-INF/websocketclient.html").forward(request,response);
+        logger.debug("IP: " + request.getRemoteAddr());
 
     }
 
