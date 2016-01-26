@@ -1,7 +1,5 @@
 package me.websocketchat;
 
-import me.log.Log;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +15,6 @@ public class RedirectServlet extends HttpServlet{
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Log.getLoger().getLogger().info(request.getRemoteAddr());
         request.getRequestDispatcher("WEB-INF/websocketclient.html").forward(request,response);
 
     }
