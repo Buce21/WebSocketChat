@@ -4,6 +4,8 @@ package me.websocketchat;
  * Created by Buce on 2016/1/20.
  */
 
+import sun.rmi.runtime.Log;
+
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 @ServerEndpoint(value="/chat")
 public class WebSocketChat {
@@ -21,24 +24,24 @@ public class WebSocketChat {
     private static final Map<String,String> names = new LinkedHashMap<>();
     static Integer connectNum = 0;
     private Counter counter = new Counter();
+    private Logger logger = Logger.getLogger("WebSocketChat");
 
 
     @OnOpen
     public void start(Session session){
-        System.out.println("session "+session.getId()+" open.");
+        logger.info("chat-session "+session.getId()+" open.");
         ++connectNum;
         sendCount();
     }
 
     @OnMessage
     public void process(Session session, String message){
-        System.out.println("process---"+message);
+        logger.info("process---"+message);
         if (message.indexOf("进入了聊天室") != -1) {
             this.session = session;
             int beginIndex = message.indexOf("【");
             int endIndex = message.indexOf("】");
             nickName = message.substring(beginIndex + 1,endIndex) + UUID.randomUUID();
-            System.out.println( message.substring(beginIndex + 1,endIndex));
             names.put(nickName , message.substring(beginIndex + 1,endIndex));
             connections.put(nickName, this);
             sendCount();
@@ -48,7 +51,7 @@ public class WebSocketChat {
 
     @OnClose
     public void end(Session session){
-        System.out.println("session " + session.getId() + " close.");
+        logger.info("chat-session " + session.getId() + " close.");
         --connectNum;
         names.remove(nickName);
         connections.remove(nickName);
@@ -96,7 +99,6 @@ public class WebSocketChat {
         for (String key : names.keySet()){
             str+=names.get(key)+"|";
         }
-        System.out.println(str);
         counter.send(str);
     }
 
