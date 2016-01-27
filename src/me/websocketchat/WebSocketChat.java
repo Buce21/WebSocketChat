@@ -4,7 +4,6 @@ package me.websocketchat;
  * Created by Buce on 2016/1/20.
  */
 
-import sun.rmi.runtime.Log;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;

@@ -10,7 +10,7 @@
 
         <init-param>
             <param-name>log4j-init-file</param-name>
-            <param-value>WEB-INF\log4j.lcf</param-value>
+            <param-value>WEB-INF/log4j.lcf</param-value>
         </init-param>
 
         <load-on-startup>1</load-on-startup>

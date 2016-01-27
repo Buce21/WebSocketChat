@@ -174,12 +174,12 @@ $(document).ready(function () {
     /*验证浏览器是否支持WebSocket*/
     var WebSocketsExist = true;
     try {
-        var dummy = new WebSocket("ws://localhost:8088/WebSocketChat/test");
+        var dummy = new WebSocket("ws://45.78.46.180/WebSocketChat/test");
         dummy.close();
     } catch (ex) {
         try
         {
-            var webSocket = new MozWebSocket("ws://localhost:8088/WebSocketChat/test")
+            var webSocket = new MozWebSocket("ws://45.78.46.180/WebSocketChat/test")
             webSocket.close();
         }
         catch(ex)
@@ -190,8 +190,8 @@ $(document).ready(function () {
 
     if (WebSocketsExist) {
         Log("您的浏览器支持WebSocket. 您可以尝试连接到聊天服务器!", "OK");
-        document.getElementById("Connection").value = "localhost:8088/WebSocketChat/chat";  //设置服务器默认参数
-        countS = new WebSocket("ws://localhost:8088/WebSocketChat/counter");  //获取在线人数
+        document.getElementById("Connection").value = "45.78.46.180/WebSocketChat/chat";  //设置服务器默认参数
+        countS = new WebSocket("ws://45.78.46.180/WebSocketChat/counter");  //获取在线人数
         countS.onopen = updateList;
         countS.onmessage = updateList;
         countS.onclose = updateList;
